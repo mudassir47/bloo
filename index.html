@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bluetooth Devices</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 20px 0;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Nearby Bluetooth Devices</h1>
+        <button id="scanBtn">Scan for Bluetooth Devices</button>
+        <ul id="deviceList"></ul>
+    </div>
+    <script>
+        document.getElementById('scanBtn').addEventListener('click', async () => {
+            try {
+                const options = {
+                    acceptAllDevices: true,
+                    optionalServices: ['battery_service', 'device_information']
+                };
+                const device = await navigator.bluetooth.requestDevice(options);
+                const deviceList = document.getElementById('deviceList');
+                const listItem = document.createElement('li');
+                listItem.textContent = device.name || 'Unnamed device';
+                deviceList.appendChild(listItem);
+            } catch (error) {
+                console.error('Error: ' + error);
+            }
+        });
+    </script>
+</body>
+</html>
