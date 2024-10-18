@@ -38,11 +38,10 @@
         button:hover {
             background-color: #0056b3;
         }
-        ul {
-            list-style: none;
+        #deviceList {
             padding: 0;
         }
-        li {
+        .device {
             padding: 10px;
             border-bottom: 1px solid #ddd;
         }
@@ -52,7 +51,7 @@
     <div class="container">
         <h1>Nearby Bluetooth Devices</h1>
         <button id="scanBtn">Scan for Bluetooth Devices</button>
-        <ul id="deviceList"></ul>
+        <div id="deviceList"></div>
     </div>
     <script>
         document.getElementById('scanBtn').addEventListener('click', async () => {
@@ -63,11 +62,13 @@
                 };
                 const device = await navigator.bluetooth.requestDevice(options);
                 const deviceList = document.getElementById('deviceList');
-                const listItem = document.createElement('li');
+                const listItem = document.createElement('div');
+                listItem.className = 'device';
                 listItem.textContent = device.name || 'Unnamed device';
                 deviceList.appendChild(listItem);
             } catch (error) {
                 console.error('Error: ' + error);
+                alert('Error: ' + error.message);
             }
         });
     </script>
